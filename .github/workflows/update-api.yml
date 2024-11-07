@@ -1,0 +1,22 @@
+name: Update API Job
+run-name: Update API
+on:
+    push:
+        branches:
+            - main
+jobs:
+    Update-API-Mock:
+        if: contains( github.ref, 'main')
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - shell: bash
+              env:
+                  BLACKBIRD_CONFIG: ${{ secrets.BLACKBIRD_CONFIG }}
+              run: |
+                mkdir ~/.blackbird
+                printf "$BLACKBIRD_CONFIG" > ~/.blackbird/config
+                curl -fL 'https://blackbird.a8r.io/api/download/cli/v1.7.0/linux/amd64' -o ./blackbird
+                chmod +x ./blackbird
+                ./blackbird login
+                ./blackbird api update --spec-path=simple-users-service.json simple-users-service
