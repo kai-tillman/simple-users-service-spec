@@ -92,6 +92,45 @@
           }
         }
       }
+    },
+    "/users/{userId}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "String UUID ID of the user to get",
+            "example": "32073770-8180-4fd5-be48-c4c8bd2b9998"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
